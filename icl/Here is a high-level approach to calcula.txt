@@ -1,0 +1,94 @@
+Here is a high-level approach to calculating the AVEIO from the provided code:
+
+1. Identify all the points where IO operations are performed.
+2. Maintain a record of the lengths of these IO operations.
+3. Calculate the sum of all IO operation lengths.
+4. Divide the sum by the total number of IO operations to get the AVEIO.
+
+// Assuming 'aveio' is of type double and initialized to 0
+
+double aveio = 0;
+int ioCount = 0;
+
+// ... (other parts of the code)
+
+// Inside the 'ICL_GENERIC_CACHE_READ' block
+// We assume each read operation increments 'ioCount' and add the length of the IO to 'aveio'.
+// You need to adapt this based on the actual structure of the IO operations in your code.
+
+for (auto &iter : readList) {
+    // ... (other parts of the code)
+
+    uint64_t ioLength = beginAt - tick;
+    aveio = ((aveio * ioCount) + ioLength) / (ioCount + 1);
+    ioCount++;
+
+    // ... (other parts of the code)
+}
+
+// ... (other parts of the code)
+
+// Inside the 'WRITE' function
+// We assume each write operation increments 'ioCount' and add the length of the IO to 'aveio'.
+// You need to adapt this based on the actual structure of the IO operations in your code.
+
+if (ret) {
+    // ... (other parts of the code)
+
+    uint64_t ioLength = tick - arrived;
+    aveio = ((aveio * ioCount) + ioLength) / (ioCount + 1);
+    ioCount++;
+
+    // ... (other parts of the code)
+}
+
+// ... (other parts of the code)
+
+// 'aveio' now contains the average length of continuously erased IOs.
+
+--------------------------------------------------------------------------------------
+
+// Placeholders for AVEIO calculation
+double aveio_read = 0;
+double aveio_write = 0;
+int ioCount_read = 0;
+int ioCount_write = 0;
+
+// ... (other parts of the code)
+
+// Inside the 'read' function
+// We assume each read operation increments 'ioCount_read' and add the length of the IO to 'aveio_read'.
+// You need to adapt this based on the actual structure of the IO operations in your code.
+
+// Example:
+if (ret) {
+    // ... (other parts of the code)
+
+    uint64_t ioLength = tick - arrived; // Assuming this is the length of the read operation
+    aveio_read = ((aveio_read * ioCount_read) + ioLength) / (ioCount_read + 1);
+    ioCount_read++;
+
+    // ... (other parts of the code)
+}
+
+// ... (other parts of the code)
+
+// Inside the 'write' function
+// We assume each write operation increments 'ioCount_write' and add the length of the IO to 'aveio_write'.
+// You need to adapt this based on the actual structure of the IO operations in your code.
+
+// Example:
+if (ret) {
+    // ... (other parts of the code)
+
+    uint64_t ioLength = tick - arrived; // Assuming this is the length of the write operation
+    aveio_write = ((aveio_write * ioCount_write) + ioLength) / (ioCount_write + 1);
+    ioCount_write++;
+
+    // ... (other parts of the code)
+}
+
+// ... (other parts of the code)
+
+// 'aveio_read' now contains the average length of continuously erased IOs in the 'read' function.
+// 'aveio_write' now contains the average length of continuously erased IOs in the 'write' function.
